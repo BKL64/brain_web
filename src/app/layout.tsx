@@ -42,8 +42,11 @@ export default function RootLayout({
       className={`${inter.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <head>
-        {/* Google AdSense - Replace with your own ca-pub ID */}
-        {/* <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX" crossOrigin="anonymous"></script> */}
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4982670575791963"
+          crossOrigin="anonymous"
+        />
       </head>
       <body className="min-h-screen flex flex-col relative">
         {/* ── Top AdSense Banner (728x90) ── */}
@@ -53,9 +56,8 @@ export default function RootLayout({
             [ AD SPACE — 728×90 ]
           </div>
         </div>
-
         {/* ── Main Content ── */}
-        <main className="flex-1 flex items-center justify-center relative z-10 px-4 py-4">
+        <main className="flex-1 flex items-start justify-center relative z-10 px-4 py-8 overflow-y-auto">
           {children}
         </main>
       </body>
