@@ -1,0 +1,195 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: #0a0a12;
+  --color-foreground: #e0e0ff;
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains);
+}
+
+/* ── Animated gradient background ── */
+body {
+  background: linear-gradient(135deg, #0d0221 0%, #150535 25%, #0a1628 50%, #0d0221 75%, #1a0a3e 100%);
+  background-size: 400% 400%;
+  animation: gradientShift 20s ease infinite;
+  color: var(--color-foreground);
+  font-family: var(--font-sans), sans-serif;
+  overflow-x: hidden;
+}
+
+/* ── Particles ── */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::before {
+  background-image:
+    radial-gradient(1.5px 1.5px at 10% 20%, rgba(139, 92, 246, 0.35) 50%, transparent 50%),
+    radial-gradient(1px 1px at 25% 55%, rgba(99, 102, 241, 0.3) 50%, transparent 50%),
+    radial-gradient(1.5px 1.5px at 40% 15%, rgba(167, 139, 250, 0.25) 50%, transparent 50%),
+    radial-gradient(1px 1px at 55% 70%, rgba(129, 140, 248, 0.3) 50%, transparent 50%),
+    radial-gradient(2px 2px at 70% 35%, rgba(139, 92, 246, 0.2) 50%, transparent 50%),
+    radial-gradient(1px 1px at 85% 80%, rgba(99, 102, 241, 0.35) 50%, transparent 50%),
+    radial-gradient(1.5px 1.5px at 15% 85%, rgba(167, 139, 250, 0.2) 50%, transparent 50%),
+    radial-gradient(1px 1px at 60% 45%, rgba(139, 92, 246, 0.3) 50%, transparent 50%),
+    radial-gradient(1.5px 1.5px at 90% 10%, rgba(129, 140, 248, 0.25) 50%, transparent 50%),
+    radial-gradient(1px 1px at 35% 90%, rgba(99, 102, 241, 0.2) 50%, transparent 50%),
+    radial-gradient(2px 2px at 50% 30%, rgba(167, 139, 250, 0.15) 50%, transparent 50%),
+    radial-gradient(1px 1px at 75% 60%, rgba(139, 92, 246, 0.25) 50%, transparent 50%);
+  animation: particleDrift 30s linear infinite;
+}
+
+body::after {
+  background-image:
+    radial-gradient(1px 1px at 5% 40%, rgba(236, 72, 153, 0.2) 50%, transparent 50%),
+    radial-gradient(1.5px 1.5px at 20% 75%, rgba(244, 114, 182, 0.15) 50%, transparent 50%),
+    radial-gradient(1px 1px at 45% 25%, rgba(236, 72, 153, 0.2) 50%, transparent 50%),
+    radial-gradient(1.5px 1.5px at 65% 85%, rgba(244, 114, 182, 0.15) 50%, transparent 50%),
+    radial-gradient(1px 1px at 80% 50%, rgba(236, 72, 153, 0.2) 50%, transparent 50%),
+    radial-gradient(1.5px 1.5px at 95% 15%, rgba(244, 114, 182, 0.15) 50%, transparent 50%);
+  animation: particleDrift 45s linear infinite reverse;
+}
+
+/* ── Keyframes ── */
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  25% { background-position: 100% 0%; }
+  50% { background-position: 100% 100%; }
+  75% { background-position: 0% 100%; }
+}
+
+@keyframes particleDrift {
+  0% { transform: translateY(0) translateX(0); }
+  25% { transform: translateY(-8px) translateX(5px); }
+  50% { transform: translateY(-3px) translateX(-4px); }
+  75% { transform: translateY(-10px) translateX(3px); }
+  100% { transform: translateY(0) translateX(0); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.4), 0 0 60px rgba(139, 92, 246, 0.1);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(139, 92, 246, 0.6), 0 0 90px rgba(139, 92, 246, 0.2);
+    transform: scale(1.03);
+  }
+}
+
+@keyframes shockwave {
+  0% {
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.6);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 0 12px rgba(34, 197, 94, 0);
+    transform: scale(1.08);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+    transform: scale(1);
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10% { transform: translateX(-6px); }
+  20% { transform: translateX(6px); }
+  30% { transform: translateX(-5px); }
+  40% { transform: translateX(5px); }
+  50% { transform: translateX(-3px); }
+  60% { transform: translateX(3px); }
+  70% { transform: translateX(-2px); }
+  80% { transform: translateX(2px); }
+}
+
+@keyframes scanline {
+  0% { top: -10%; }
+  100% { top: 110%; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes countUp {
+  from { opacity: 0; transform: scale(0.5); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes borderGlow {
+  0%, 100% { border-color: rgba(139, 92, 246, 0.3); }
+  50% { border-color: rgba(139, 92, 246, 0.7); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* ── Utility classes ── */
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.animate-shockwave {
+  animation: shockwave 0.5s ease-out;
+}
+
+.animate-shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+.animate-scanline {
+  animation: scanline 1.2s linear;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.animate-count-up {
+  animation: countUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.animate-border-glow {
+  animation: borderGlow 2s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.glass {
+  background: rgba(15, 10, 40, 0.55);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.glass-strong {
+  background: rgba(15, 10, 40, 0.7);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+/* Delay utility for staggered animations */
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
