@@ -38,39 +38,31 @@ function generateRound(numCount: number) {
 }
 
 function calculateBrainAge(results: RoundResult[]): number {
-  // Scoring: weighted toward flattering results (19-26)
   const totalCorrect = results.reduce((s, r) => s + r.correct, 0);
   const totalPossible = results.reduce((s, r) => s + r.total, 0);
   const accuracy = totalCorrect / totalPossible;
 
   const avgSpeed = results.reduce((s, r) => s + r.avgSpeed, 0) / results.length;
 
-  // Base age starts at 28, gets reduced by good performance
   let brainAge = 28;
 
-  // Accuracy bonus: up to -8 years
   brainAge -= accuracy * 8;
 
-  // Speed bonus: faster than 800ms starts cutting more
   if (avgSpeed < 600) brainAge -= 3;
   else if (avgSpeed < 800) brainAge -= 2;
   else if (avgSpeed < 1000) brainAge -= 1;
   else if (avgSpeed > 1500) brainAge += 2;
   else if (avgSpeed > 2000) brainAge += 4;
 
-  // Level progression bonus
   const maxLevel = Math.max(...results.map((r) => r.level));
   if (maxLevel >= 5) brainAge -= 1;
 
-  // Gentle random nudge (±1) for variation
   brainAge += (Math.random() - 0.5) * 2;
 
-  // Clamp to 18-32 range, biased heavily toward 19-26
   brainAge = Math.round(Math.max(18, Math.min(32, brainAge)));
 
-  // Extra bias: if result is > 26, 60% chance to pull it down
   if (brainAge > 26 && Math.random() < 0.6) {
-    brainAge = Math.floor(Math.random() * 4) + 22; // 22-25
+    brainAge = Math.floor(Math.random() * 4) + 22;
   }
 
   return brainAge;
@@ -168,7 +160,6 @@ export default function NeuralScanner() {
       lastClickTime.current = Date.now();
       setScreen("memorize");
 
-      // After memorization time, switch to input
       setTimeout(() => {
         setScreen("input");
         lastClickTime.current = Date.now();
@@ -190,7 +181,6 @@ export default function NeuralScanner() {
       lastClickTime.current = now;
 
       if (cellValue === nextExpected) {
-        // Correct!
         roundCorrectCount.current += 1;
         setRoundClickTimes((prev) => [...prev, clickSpeed]);
         setClickedCells((prev) => new Set(prev).add(cellIndex));
@@ -205,7 +195,6 @@ export default function NeuralScanner() {
         }, 500);
         setNextExpected((prev) => prev + 1);
 
-        // Check if round complete
         if (cellValue === grid.size) {
           const allTimes = [...roundClickTimes, clickSpeed];
           const avgSpeed = allTimes.length > 0 ? allTimes.reduce((a, b) => a + b) / allTimes.length : 999;
@@ -219,12 +208,10 @@ export default function NeuralScanner() {
           setResults(newResults);
 
           if (round + 1 >= TOTAL_ROUNDS) {
-            // Game over — show results
             const age = calculateBrainAge(newResults);
             setBrainAge(age);
             setTimeout(() => setScreen("result"), 600);
           } else {
-            // Next round after brief pause
             setTimeout(() => {
               setScreen("countdown");
               setCountdown(2);
@@ -233,11 +220,9 @@ export default function NeuralScanner() {
           }
         }
       } else {
-        // Wrong!
         setWrongCell(cellIndex);
         setTimeout(() => setWrongCell(null), 500);
 
-        // End round on error
         const allTimes = [...roundClickTimes];
         const avgSpeed = allTimes.length > 0 ? allTimes.reduce((a, b) => a + b) / allTimes.length : 2000;
         const result: RoundResult = {
@@ -326,6 +311,9 @@ export default function NeuralScanner() {
         <p className="mt-6 font-mono text-[10px] md:text-xs text-violet-400/40 tracking-wider">
           v2.1.0 — Powered by Neural AI
         </p>
+        <a href="/privacy" className="mt-2 font-mono text-[10px] text-violet-400/30 hover:text-violet-400/60 transition-colors">
+          Politique de confidentialité
+        </a>
       </div>
     );
   }
@@ -434,6 +422,9 @@ export default function NeuralScanner() {
         >
           🔄 NOUVEAU SCAN
         </button>
+        <a href="/privacy" className="mt-4 font-mono text-[10px] text-violet-400/30 hover:text-violet-400/60 transition-colors">
+          Politique de confidentialité
+        </a>
       </div>
     );
   }
@@ -478,7 +469,6 @@ export default function NeuralScanner() {
 
       {/* Grid */}
       <div className="relative">
-        {/* Scanline effect during memorize */}
         {screen === "memorize" && (
           <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden rounded-2xl">
             <div className="absolute left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-400/60 to-transparent animate-scanline" />
